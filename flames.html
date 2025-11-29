@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flames</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: linear-gradient(135deg, #f7e9ff, #d6f1ff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #container {
+            padding-left: 50px;
+            margin-top: 130px;
+            width: 400px;
+            height: 400px;
+            background-color: #918b91c9;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 1px 2px 3px black;
+        }
+
+        input {
+            width: 300px;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 28px;
+
+        }
+
+        button {
+            width: 140px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        button:hover{
+            background-color:#d6f1ff ;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="container">
+
+        <h1>Flames Game !..</h1>
+        <label class="flames" for="name1">Enter Name 1:</label>
+        <input type="text" id="name1" placeholder="Enter Name 1" autocomplete="off" required>
+        <label class="flames" for="name2">Enter Name 2:</label>
+        <input type="text" id="name2" placeholder="Enter Name 2" autocomplete="off" required>
+        <div class="btn-container">
+            <button id="btn">Calculate</button>
+            <button id="reset-btn">Reset</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+
+
+    <script>
+        document.getElementById("name1").addEventListener("input", function () {
+            this.value = this.value.replace(/[^a-zA-Z ]/g, "");
+        });
+
+        document.getElementById("name2").addEventListener("input", function () {
+            this.value = this.value.replace(/[^a-zA-Z ]/g, "");
+        });
+
+        let reset_btn = document.getElementById("reset-btn")
+        reset_btn.onclick = function () {
+            document.getElementById("name1").value = "";
+            document.getElementById("name2").value = "";
+            document.getElementById("result").innerHTML = "";
+        }
+
+
+        let btn = document.getElementById("btn")
+        btn.onclick = function () {
+
+
+            let inp1 = document.getElementById("name1").value.toLowerCase();
+            let inp2 = document.getElementById("name2").value.toLowerCase();
+            let res = document.getElementById("result");
+
+            if (!inp1 || !inp2) {
+                res.innerHTML = `<h2>Please Enter both names.</h2>`;
+                return;
+            }
+
+            let flames = ["Friends 🧑🏽‍🤝‍🧑🏾", "Love 👩‍❤️‍👨", "Affection 💌", "Marraiage 👰‍♂️👰‍♀️", "Enemy 🤼", "Sister 👩‍❤️‍👩"];
+
+            let arr1 = inp1.split("");
+            let arr2 = inp2.split("");
+
+            for (let i = 0; i < arr1.length; i++) {
+                for (let j = 0; j < arr2.length; j++) {
+                    if (arr1[i] === arr2[j]) {
+                        arr1.splice(i, 1);
+                        arr2.splice(j, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+
+            let ch = arr1.length + arr2.length;
+            console.log(ch);
+
+            let i = 0;
+
+            while (flames.length > 1) {
+                i = (i + ch - 1) % flames.length;
+                flames.splice(i, 1);
+            }
+
+            let result = flames[0];
+
+            res.innerHTML = `<h2>Result: ${result}</h2>`;
+
+            alert(`Your relationship status is: ${result}`);
+        }
+
+    </script>
+</body>
+
+</html>
